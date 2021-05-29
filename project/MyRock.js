@@ -1,21 +1,30 @@
-import {CGFobject} from './lib/CGF.js';
+import {CGFobject, CGFappearance} from '../lib/CGF.js';
 
-export class MySphere extends CGFobject {
-  /**
-   * @method constructor
-   * @param  {CGFscene} scene - MyScene object
-   * @param  {integer} slices - number of slices around Y axis
-   * @param  {integer} stacks - number of stacks along Y axis, from the center to the poles (half of sphere)
-   */
-  constructor(scene, slices, stacks) {
+export class MyRock extends CGFobject {
+
+  constructor(scene, slices, stacks, position) {
     super(scene);
     this.latDivs = stacks * 2;
     this.longDivs = slices;
+    this.position = position;
+    this.randomXScale = Math.random() * 0.4 + 0.3;
+    this.randomZScale = Math.random() * 0.4 + 0.3;
+    this.randomYScale = this.randomXScale * this.randomZScale * 0.7;
+    this.rockSize = this.randomXScale;
+    this.randomRotation = Math.random() * Math.PI * 2;
     
     this.initBuffers();
+    this.initMaterials();
   }
 
-
+  initMaterials(){
+    this.rockAppearance = new CGFappearance(this.scene);
+    this.rockAppearance.setAmbient(0.3, 0.3, 0.3, 1);
+	  this.rockAppearance.setDiffuse(0.7, 0.7, 0.7, 1);
+	  this.rockAppearance.setSpecular(0.9, 0.9, 0.9, 1);
+ 
+    
+  }
 
   /**
    * @method initBuffers
@@ -35,18 +44,32 @@ export class MySphere extends CGFobject {
     var latVertices = this.longDivs + 1;
 
     // build an all-around stack at a time, starting on "north pole" and proceeding "south"
-    for (let latitude = 0; latitude <= this.latDivs; latitude++) {
+    for (let latitude = 0; latitude <= this.latDivs ; latitude++) {
       var sinPhi = Math.sin(phi);
       var cosPhi = Math.cos(phi);
 
       // in each stack, build all the slices around, starting on longitude 0
       theta = 0;
+      var firstVert = [];
       for (let longitude = 0; longitude <= this.longDivs; longitude++) {
         //--- Vertices coordinates
         var x = Math.cos(theta) * sinPhi;
         var y = cosPhi;
         var z = Math.sin(-theta) * sinPhi;
-        this.vertices.push(x, y, z);
+        
+        //distort this man
+        
+        var vertexDistort = (Math.random() * 0.5 + 0.75);
+        
+        if(longitude == 0){
+            firstVert.push(x * vertexDistort, y * vertexDistort , z * vertexDistort);
+        }
+
+        if(longitude == this.longDivs - 1){
+            this.vertices.push(firstVert[0], firstVert[1], firstVert[2]);
+        }else{
+            this.vertices.push(x * vertexDistort, y * vertexDistort , z * vertexDistort );
+        }
 
         //--- Indices
         if (latitude < this.latDivs && longitude < this.longDivs) {
@@ -55,7 +78,8 @@ export class MySphere extends CGFobject {
           // pushing two triangles using indices from this round (current, current+1)
           // and the ones directly south (next, next+1)
           // (i.e. one full round of slices ahead)
-          
+        
+
           this.indices.push( current + 1, current, next);
           this.indices.push( current + 1, next, next +1);
         }
@@ -74,6 +98,7 @@ export class MySphere extends CGFobject {
         
         this.texCoords.push(longitude / this.longDivs, latitude / this.latDivs);
       }
+
       phi += phiInc;
     }
 
@@ -83,7 +108,13 @@ export class MySphere extends CGFobject {
   }
 
   display(){
-      
+      this.scene.pushMatrix();
+      this.rockAppearance.apply();
+      this.scene.translate(this.position[0], this.position[1], this.position[2]);
+      this.scene.rotate(this.randomRotation, 0,1,0);
+      this.scene.scale(0.35, 0.7, 0.35);
+      this.scene.scale(this.randomXScale, this.randomYScale, this.randomZScale);
       super.display();
+      this.scene.popMatrix();
   }
 }

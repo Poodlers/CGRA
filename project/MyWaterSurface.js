@@ -1,4 +1,4 @@
-import { CGFobject, CGFtexture,CGFshader } from './lib/CGF.js';
+import { CGFobject, CGFtexture,CGFshader } from '../lib/CGF.js';
 import { MyPlane } from './MyPlane.js';
 
 export class MyWaterSurface extends CGFobject {

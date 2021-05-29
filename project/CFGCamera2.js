@@ -1,4 +1,4 @@
-import { CGFcamera, CGFcameraAxisID } from "./lib/CGF.js";
+import { CGFcamera, CGFcameraAxisID } from "../lib/CGF.js";
 
 export class CGFcamera2 extends CGFcamera {
   vec3EulerRotation(vec, euler) {

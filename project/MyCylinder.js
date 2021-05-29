@@ -1,4 +1,4 @@
-import {CGFobject, CGFappearance} from './lib/CGF.js';
+import {CGFobject, CGFappearance} from '../lib/CGF.js';
 
 export class MyCylinder extends CGFobject {
     constructor(scene, slices, stacks,height, texture, color) {

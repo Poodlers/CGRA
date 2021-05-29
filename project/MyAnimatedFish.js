@@ -1,4 +1,4 @@
-import { CGFobject } from "./lib/CGF.js";
+import { CGFobject } from "../lib/CGF.js";
 import { MyFish } from "./MyFish.js";
 
 export class MyAnimatedFish extends CGFobject{

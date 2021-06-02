@@ -68,7 +68,7 @@ export class MyScene extends CGFscene {
         this.pyramid = new MyPyramid(this,4,1);
         this.movingObject = new MyMovingObject(this, this.pyramid, this.rotationAngle, this.speed, this.speedFactor, this.position);
         
-        this.incompleteSphere = new MySphere(this, 16, 8, this.globeTex);
+        this.incompleteSphere = new MySphere(this, 16, 8);
         this.fish = new MyFish(this, [0, 2, 0], [1.0, 0.0, 0.0, 1.0], Math.random() * 0.2 + 0.5);
         this.rotateLeftBarbatana = true;
         this.rotateRightBarbatana = true;
@@ -141,6 +141,7 @@ export class MyScene extends CGFscene {
 		this.sphereAppearance.setDiffuse(0.7, 0.7, 0.7, 1);
 		this.sphereAppearance.setSpecular(0.0, 0.0, 0.0, 1);
 		this.sphereAppearance.setShininess(120);
+        this.sphereAppearance.setTexture(this.globeTex);
          
     
         //Objects connected to MyInterface

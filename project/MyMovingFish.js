@@ -85,6 +85,8 @@ export class MyMovingFish extends MyMovingObject{
             this.scene.translate(this.position[0] + Math.cos(this.rotationAngle - Math.PI / 2) * 0.5, this.position[1], this.position[2] - Math.sin(this.rotationAngle - Math.PI / 2) * 0.5);
             this.scene.rotate(this.rotationAngle, 0, 1, 0);
             this.scene.translate(-this.position[0], -this.position[1], -this.position[2]);
+            
+            
             this.rock.display();
             this.scene.popMatrix();
         }

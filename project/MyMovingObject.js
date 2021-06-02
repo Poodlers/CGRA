@@ -51,6 +51,9 @@ export class MyMovingObject extends CGFobject {
         this.scene.translate(this.position[0], this.position[1], this.position[2]);
         this.scene.rotate(this.rotationAngle, 0, 1, 0);
         this.scene.translate(-this.position[0], -this.position[1], -this.position[2]);
+
+
+        this.scene.translate(this.position[0], this.position[1], this.position[2]);
         this.object.display();
         this.scene.popMatrix();
     

@@ -69,7 +69,7 @@ export class MyFish extends CGFobject {
 
         this.eyesTex.apply();
         this.scene.pushMatrix();
-        this.scene.translate(this.position[0], this.position[1], this.position[2]);
+        //this.scene.translate(this.position[0], this.position[1], this.position[2]);
         this.scene.pushMatrix();
         this.scene.translate(0.08,0.04,0.16);
         this.scene.scale(0.05,0.05,0.05);
